@@ -73,7 +73,7 @@ class ThemeInstallator extends Module
 		@ini_set('memory_limit', '2G');
 
 		$this->name = 'themeinstallator';
-		$this->version = '2.5';
+		$this->version = '2.6';
 		$this->author = 'PrestaShop';
 		$this->need_instance = 0;
 		if (version_compare(_PS_VERSION_, 1.4) >= 0)
@@ -83,7 +83,7 @@ class ThemeInstallator extends Module
 		parent::__construct();
 		$this->displayName = $this->l('Import/export a theme');
 		$this->description = $this->l('Export or Install a theme and its modules on your shop.');
-
+		$this->ps_versions_compliancy = array('min' => '1.5.6.1', 'max' => _PS_VERSION_);
 
 		if ($this->active && defined('_PS_ADMIN_DIR_'))
 		{
