@@ -123,12 +123,12 @@ class ThemeInstallator extends Module
 		{
 			$backward_module = Module::getInstanceByName('backwardcompatibility');
 			if (!$backward_module->active)
-				$this->warning .= $this->l('To work properly the module requires the backward compatibility module enabled').'<br />';
+				$this->warning .= $this->l('To work properly, this module requires the Backward Compatibility module enabled.').'<br />';
 			elseif ($backward_module->version < ThemeInstallator::BACKWARD_REQUIREMENT)
-				$this->warning .= $this->l('To work properly the module requires at least the backward compatibility module v').ThemeInstallator::BACKWARD_REQUIREMENT.'.<br />';
+				$this->warning .= $this->l('To work properly, this module requires at least version').' '.ThemeInstallator::BACKWARD_REQUIREMENT.' '.$this->l('of the Backward Compatibility module').'<br />';
 		}
 		else
-			$this->warning .= $this->l('In order to use the module you need to install the backward compatibility.').'<br />';
+			$this->warning .= $this->l('In order to use this module, you need to install the Backward Compatibility module.').'<br />';
 	}
 
 	private function getTheNativeModules()
