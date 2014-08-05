@@ -123,12 +123,12 @@ class ThemeInstallator extends Module
 		{
 			$backward_module = Module::getInstanceByName('backwardcompatibility');
 			if (!$backward_module->active)
-				$this->warning .= $this->l('To work properly, this module requires the Backward Compatibility module enabled.').'<br />';
+				$this->warning .= $this->l('The module requires that you enable the Backward Compatibility module enabled to work properly.').'<br />';
 			elseif ($backward_module->version < ThemeInstallator::BACKWARD_REQUIREMENT)
-				$this->warning .= $this->l('To work properly, this module requires at least version').' '.ThemeInstallator::BACKWARD_REQUIREMENT.' '.$this->l('of the Backward Compatibility module').'<br />';
+				$this->warning .= sprintf($this->l('This module requires at least the backward compatibility module v%s.'), ThemeInstallator::BACKWARD_REQUIREMENT).'<br />';
 		}
 		else
-			$this->warning .= $this->l('In order to use this module, you need to install the Backward Compatibility module.').'<br />';
+			$this->warning .= $this->l('In order to use the module, you need to install the Backward Compatibility module.').'<br />';
 	}
 
 	private function getTheNativeModules()
@@ -459,7 +459,7 @@ class ThemeInstallator extends Module
 	}
 
 	/*
-	** Checker si le dossier doc existe : Si oui appeler la fonction !
+	** Check that the doc folder exists. If so, call the function!
 	*/
 	private function loadDocForm()
 	{
@@ -482,7 +482,7 @@ class ThemeInstallator extends Module
 			$doc .= '<li><i><a target="_blank" href="'._MODULE_DIR_.$this->name.'/import/'.$docpath[$i++].'">'.$row.'</a></i>';
 		$doc .= '
 				</ul>
-			<p class="clear">'.$this->l('Right click on the name and choose "save link as"').'
+			<p class="clear">'.$this->l('Right click on the file\'s name and choose "Save link as".').'
 			</div>
 		</fieldset>
 		<p class="clear">&nbsp;</p>';
@@ -763,13 +763,13 @@ class ThemeInstallator extends Module
 		// It is now created during displayForm3
 		$result = $this->updateImages();
 		if (!isset($result['error']))
-			$msg .= $this->l('Images have been correctly updated in database');
+			$msg .= $this->l('Images have been correctly updated in the database.');
 		else
 		{
 			$errors = '<em><strong>'.
 				$this->l('Warning: Copy/Paste your errors if you want to manually set the image type (in the "Images" page under the "Preferences" menu):').
 				'</em></strong><br />';
-			$errors .= $this->l('Some kind of image could not be added because they exists. Here\'s the list:');
+			$errors .= $this->l('Some types of image could not be added because they already exist. Here\'s the list:');
 			$errors .= '<ul>';
 			foreach ($result['error'] as $error)
 				$errors .= '<li style="color:#D8000C">'.
@@ -844,9 +844,9 @@ class ThemeInstallator extends Module
 
 			if (count($ok) > 0)
 			{
-				$msg = $this->l('The following themes were successfully imported').':<ul><i>';
+				$msg = $this->l('The following themes were successfully imported:').'<ul><i>';
 				foreach ($ok as $row)
-					$msg .= '<li> '.$row;
+					$msg .= '<li> '.$row.'</li>';
 				$msg .= '</i></ul>';
 				$this->_msg = parent::displayConfirmation($msg);
 			}
@@ -864,7 +864,7 @@ class ThemeInstallator extends Module
 					$module_already_exists = file_exists(_PS_MODULE_DIR_.$row);
 					$var .= '<input type="checkbox" name="modulesToExport[]" id="'.$row.'" value="'.$row.'" checked="checked" />
 						<label style="display:bock;float:none" for="'.$row.'">'.$row.
-						($module_already_exists ? ' <span style="font-size:0.8em">-> '.$this->l('Warning: a module with the same name already exists').'</span>' : '').'</label><br />';
+						($module_already_exists ? ' <span style="font-size:0.8em;color:red;">'.$this->l('Warning: a module with the same name already exists.').'</span>' : '').'</label><br />';
 				}
 
 			if ($var != '')
@@ -897,7 +897,7 @@ class ThemeInstallator extends Module
 		if (!empty($var))
 			$this->_html .= '
 				<fieldset>
-					<legend>'.$this->l('Select modules which must be disabled for this theme').'</legend>
+					<legend>'.$this->l('Select the modules which must be disabled for this theme').'</legend>
 					<p class="margin-form">'.$var.'</p>
 				</fieldset>
 				<p>&nbsp;</p>';
@@ -905,7 +905,7 @@ class ThemeInstallator extends Module
 		$this->_html .= '
 			<fieldset>
 				<legend>'.$this->l('Native modules configuration').'</legend>
-				<p>'.$this->l('This option determines which existing native modules have to be enabled/disabled').'</p>
+				<p>'.$this->l('This option determines which existing native modules have to be enabled/disabled.').'</p>
 				<ul class="margin-form" style="list-style:none">
 					<li>
 						<input type="radio" name="nativeModules" value="1" id="nativemoduleconfig1"/>
@@ -913,11 +913,11 @@ class ThemeInstallator extends Module
 					</li>
 					<li>
 						<input type="radio" name="nativeModules" value="2" id="nativemoduleconfig2" checked="checked" />
-						<label style="display:bock;float:none" for="nativemoduleconfig2">'.$this->l('Use theme\'s configuration (recommended)').'</label>
+						<label style="display:bock;float:none" for="nativemoduleconfig2">'.$this->l('Use the theme\'s configuration (recommended)').'</label>
 					</li>
 					<li>
 						<input type="radio" name="nativeModules" value="3" id="nativemoduleconfig3" />
-						<label style="display:bock;float:none" for="nativemoduleconfig3">'.$this->l('Both').'</label>
+						<label style="display:bock;float:none" for="nativemoduleconfig3">'.$this->l('Use both my configuration and the theme\'s configuration').'</label>
 					</li>
 				</ul>
 			</fieldset>
@@ -929,7 +929,7 @@ class ThemeInstallator extends Module
 
 			$this->_html .= '
 			<fieldset>
-				<legend>'.$this->l('Select your shop that will use this theme:').'</legend>
+				<legend>'.$this->l('Select the shop that will use this theme:').'</legend>
 				<div class="margin-form">'.$helper_form->renderAssoShop().'</div>
 			</fieldset>
 			<p>&nbsp;</p>';
@@ -951,13 +951,10 @@ class ThemeInstallator extends Module
 		$res = $xml->xpath('/theme/descriptions/description[@iso="'.$iso.'"]');
 		$description = (isset($res[0]) ? (string)$res[0] : '');
 		$this->_msg = parent::displayConfirmation(
-			$this->l('You are going to install the following theme').' :<br /> <b>'.
-			$xml['name'].'</b> <i>v'.$xml['version'].'</i><br />'.
-			(strlen($description) ? '<q>'.$description.'</q><br />' : '').
-			$this->l('This theme is for Prestashop').' <i>v'.
-			$xml->variations->variation[0]['from'].
-			' -> v'.$xml->variations->variation[0]['to'].'<br />'.
-			(file_exists(_PS_ALL_THEMES_DIR_.strval($xml->variations->variation[0]['directory'])) ? $this->l('Warning : You already have a theme with the same folder\'s name') : '').'
+			sprintf($this->l('You are going to install the following theme: %1$s version %2$s.'), ' <b>'.$xml['name'].'</b>', $xml['version']).'<br/>'.
+			(strlen($description) ? sprintf($this->l('Theme description: "%s".'), $description) : '').'<br/>'.
+			sprintf($this->l('This theme is for PrestaShop version %1$s up to version %2$s.'), $xml->variations->variation[0]['from'], $xml->variations->variation[0]['to']).
+			(file_exists(_PS_ALL_THEMES_DIR_.strval($xml->variations->variation[0]['directory'])) ? $this->l('Warning: You already have a theme with the same folder name.') : '').'
 			</i>');
 		if (file_exists(_IMPORT_FOLDER_.'doc') && count($xml->docs->doc) != 0)
 			self::loadDocForm();
@@ -971,10 +968,9 @@ class ThemeInstallator extends Module
 				$var .= '<input type="checkbox" name="variation[]" id="'.strval($xml->variations->variation[$count]['directory']).'" value="'.
 				strval($xml->variations->variation[$count]['directory']).'" '.
 				($foo == 1 ? '' : 'checked').'/> <label style="display:bock;float:none" for="'.strval($xml->variations->variation[$count]['directory']).'">'.
-				strval($xml->variations->variation[$count]['name']).' <span style="font-size:0.8em">'.
-				$this->l('for Prestashop').' v'.
-				strval($xml->variations->variation[$count]['from']).' -> v'.
-				strval($xml->variations->variation[$count]['to']).'  '.
+				
+				sprintf('Install the theme "%1$s" for PrestaShop version %2$s up to %3$s.', strval($xml->variations->variation[$count]['name']), strval($xml->variations->variation[$count]['from']), strval($xml->variations->variation[$count]['to'])).
+				
 				($foo == 1 ? $this->l('(Warning: a folder with the same name already exists)') : '').'</span></label><br />';
 			}
 			$this->_html .= '
@@ -995,7 +991,7 @@ class ThemeInstallator extends Module
 				</div>
 				<h3>'.$this->l('Select the variations you wish to import').'</h3>
 				<div class="margin-form">
-				<p class="clear">'.$this->l('Note: The directory of the variation will be prefixed by the theme directory.').'</p>'
+				<p class="clear">'.$this->l('Note: The directory of the variation will be prefixed with the main theme\'s directory name.').'</p>'
 				.$var.'</div>
 				<input type="submit" class="button" name="cancel" value="'.$this->l('Previous').'" />
 				<input type="submit" class="button" name="submitThemes" value="'.$this->l('Next').'" />
@@ -1103,7 +1099,7 @@ class ThemeInstallator extends Module
 						'.$import_dir.'
 					</select>
 					<p>'.sprintf(
-						$this->l('Select the ZIP file you want to use (previously uploaded in your %s directory)'),
+						$this->l('Select the ZIP file you want to use (it should have been uploaded to your %s directory).'),
 						'<b>modules/themeinstallator/import/</b>'
 					).'</p>
 				</div>
@@ -1145,13 +1141,13 @@ class ThemeInstallator extends Module
 		{
 			if (!($zip->open(_EXPORT_FOLDER_.'archive.zip', ZipArchive::OVERWRITE) === true) || !$zip->addEmptyDir('test') === true)
 				$this->_html .= parent::displayError(sprintf(
-					$this->l('Permission denied. Please set permisssion to 666 on this folder: %s'),
+					$this->l('Permission denied. Please set access rights to 666 on this folder: %s'),
 					_EXPORT_FOLDER_
 				));
 			$zip->close();
 			if ($this->error === false)
 				$this->_html .= parent::displayConfirmation(
-					sprintf($this->l('Fill this formular to export the theme %s in a ZIP file'), $theme['name'])
+					sprintf($this->l('Fill this form to export the theme "%s" in a ZIP file.'), $theme['name'])
 				);
 		}
 	}
@@ -1543,7 +1539,7 @@ class ThemeInstallator extends Module
 			!preg_match($exp, Tools::getValue('compa_from')) || !preg_match($exp, Tools::getValue('compa_to')) ||
 			version_compare(Tools::getValue('compa_from'), Tools::getValue('compa_to')) == 1)
 			$this->_html .= parent::displayError(
-				$this->l('Syntax error on version field. Only digits and points are allowed and the compatibility should be increasing or equal.'));
+				$this->l('Syntax error on the Version field. Only digits and periods are allowed, and the compatibility should be increasing or equal.'));
 		while ($this->error === false && Tools::isSubmit('myvar_'.++$count))
 		{
 			if ((int)Tools::getValue('myvar_'.$count) == -1)
@@ -1552,7 +1548,7 @@ class ThemeInstallator extends Module
 			$to = Tools::getValue('compato_'.$count);
 			if (!preg_match($exp, $from) || !preg_match($exp, $to) || version_compare($from, $to) == 1)
 				$this->_html .= parent::displayError(
-					$this->l('Syntax error on version. Only digits and points are allowed and compatibility should be increasing or equal.'));
+					$this->l('Syntax error on the Version field. Only digits and periods are allowed, and the compatibility should be increasing or equal.'));
 		}
 		if ($this->error == true)
 			return false;
@@ -1572,7 +1568,7 @@ class ThemeInstallator extends Module
 					<legend>'.$this->l('Modules').'</legend>
 					<label>'.$this->l('Select the modules that you wish to export').'</label>
 					<div class="margin-form">'.$tmp.'</div>
-						<div class="info">'.$this->l('It\'s a list of installed modules which are not native.').'</div>
+						<div class="info">'.$this->l('Here is a list of installed modules which are not native.').'</div>
 				</fieldset>
 				<p class="clear">&nbsp;</p>';
 		}
@@ -1651,13 +1647,13 @@ class ThemeInstallator extends Module
 		$val2 = Tools::getValue('compa_to') ? Tools::getValue('compa_to') : DEFAULT_COMPATIBILITY_TO;
 		$this->_html .= '
 			<div style="float: left;">
-				<label>'.$this->l('Compatible From').'</label>
+				<label>'.$this->l('Compatible from this version of PrestaShop').'</label>
 				<div class="margin-form">
 					<input type="text" value="'.$val.'" name="compa_from"/>
 				</div>
 			</div>
 			<div style="margin-left: 30px; float: left;">
-				<label>'.$this->l('To').'</label>
+				<label>'.$this->l('Up to this version').'</label>
 				<div class="margin-form">
 					<input type="text" value="'.$val2.'" name="compa_to">
 				</div>
@@ -1671,8 +1667,8 @@ class ThemeInstallator extends Module
 		$this->_html .= '
 			<label>'.$this->l('Add documentation').'</label>
 			<p class="margin-form">'.
-				$this->l('Give the user some help. Add a field by clicking here').'
-				<a href="javascript:addDocumentation(0);"><img alt="add" title="add" src="'._MODULE_DIR_.$this->name.'/add.png" /></a>.<br />'.
+				$this->l('Provide the user some help files. Add a new file field by clicking here:').'
+				<a href="javascript:addDocumentation(0);"><img alt="add" title="add" src="'._MODULE_DIR_.$this->name.'/add.png" /></a><br />'.
 				$this->l('File extension must be .txt or .pdf').'
 			</p>
 			<input type="hidden" name="MAX_FILE_SIZE" value="1000000">
@@ -1687,11 +1683,11 @@ class ThemeInstallator extends Module
 			<label>'.$this->l('Add variation').'
 				<a href="javascript:addVariation(-1);"><img alt="add" title="add" src="'._MODULE_DIR_.$this->name.'/add.png" /></a>
 			</label>
-			<p class="margin-form">'.$this->l('Select theme to include and its compatibility.').'</p>
+			<p class="margin-form">'.$this->l('Select theme to include and its version compatibility.').'</p>
 			<script type="text/javascript">
 				var path = "'.$this->l('Path').'";
 				var delete_img = "'._MODULE_DIR_.$this->name.'/delete.png";
-				var writeName = "'.$this->l('Name').'";
+				var writeName = "'.$this->l('Variation name').'";
 				var compafrom = "'.$this->l('From').'";
 				var compato = "'.$this->l('To').'";
 				var name_length = "'.MAX_NAME_LENGTH.'";
