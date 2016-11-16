@@ -1139,7 +1139,7 @@ class ThemeInstallator extends Module
 		$this->_html .=	'<input type="hidden" name="id_theme" value="'.$theme['id'].'" />';
 		if ($this->error === false && class_exists('ZipArchive', false) && ($zip = new ZipArchive()))
 		{
-			if (!($zip->open(_EXPORT_FOLDER_.'archive.zip', ZipArchive::OVERWRITE) === true) || !$zip->addEmptyDir('test') === true)
+			if (!($zip->open(_EXPORT_FOLDER_.'archive.zip', ZipArchive::CREATE|ZipArchive::OVERWRITE) === true) || !$zip->addEmptyDir('test') === true)
 				$this->_html .= parent::displayError(sprintf(
 					$this->l('Permission denied. Please set access rights to 666 on this folder: %s'),
 					_EXPORT_FOLDER_
@@ -1173,7 +1173,7 @@ class ThemeInstallator extends Module
 		$count = 0;
 		$zip = new ZipArchive();
 		$zip_file_name = md5(time()).'.zip';
-		if ($zip->open(_EXPORT_FOLDER_.$zip_file_name, ZipArchive::OVERWRITE) === true)
+		if ($zip->open(_EXPORT_FOLDER_.$zip_file_name, ZipArchive::CREATE|ZipArchive::OVERWRITE) === true)
 		{
 			if (!$zip->addFromString('Config.xml', $this->xml_file))
 				$this->error = true;
