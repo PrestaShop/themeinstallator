@@ -69,8 +69,8 @@ class ThemeInstallator extends Module
 
 	public function __construct()
 	{
-		@set_time_limit(0);
-		@ini_set('memory_limit', '2G');
+		@set_time_limit();
+		@ini_get('memory_limit');
 
 		$this->name = 'themeinstallator';
 		$this->version = '2.8.4';
